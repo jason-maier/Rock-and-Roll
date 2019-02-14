@@ -1,7 +1,17 @@
 import Route from '@ember/routing/route';
 import EmberObject, { computed } from '@ember/object';
-import Band from 'rarwe/models/band';
-import Song from 'rarwe/models/song';
+
+var Band = EmberObject.extend({
+    name: '',
+    slug: computed('name', function() {
+    return this.get('name').dasherize();
+    }),
+    });
+    var Song = EmberObject.extend({
+    title: '',
+    rating: 0,
+    band: ''
+    });
 
 export default Route.extend({
     model: function() {
@@ -27,9 +37,6 @@ export default Route.extend({
             rating: 5
         });
 
-        var ledZeppelin = Band.create({ name: 'Led Zeppelin' });
-        var pearlJam = Band.create({ name: 'Pearl Jam' });
-        var fooFighters = Band.create({ name: 'Foo Fighters' });
         var ledZeppelin = Band.create({ name: 'Led Zeppelin', songs: [blackDog] });
         var pearlJam = Band.create({ name: 'Pearl Jam', songs:[yellowLedbetter, daughter] });
         var fooFighters = Band.create({ name: 'Foo Fighters', songs:[pretender] });
