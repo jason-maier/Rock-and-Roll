@@ -93,3 +93,6 @@ a {
     margin-left: 20px;
 }
 
+.rating-panel > .rating-star {
+    cursor: pointer;
+}
