@@ -7,9 +7,6 @@ export default Controller.extend({
     isSongDisabled: computed('title', function() {
         return isEmpty(this.get('title'));
     }),
-    noSongs: computed('model.songs.[]', function() {
-        return this.get('model.songs.length') === 0;
-    }),
     songCreationStarted: false,
     canCreateSong: computed('songCreationStarted', 'model.songs.[]', function() {
         return this.get('songCreationStarted') || this.get('model.songs.length');
