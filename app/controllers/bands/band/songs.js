@@ -4,6 +4,10 @@ import Controller from '@ember/controller';
 import { sort } from '@ember/object/computed';
 
 export default Controller.extend({
+    queryParams: {
+        sortBy: 'sort',
+        searchTerm: 's',
+    },
     title: '',
     isSongDisabled: computed('title', function() {
         return isEmpty(this.get('title'));
@@ -22,7 +26,14 @@ export default Controller.extend({
         };
         return options[this.get('sortBy')].split(',');
     }),
-    sortedSongs: sort('model.songs', 'sortProperties'),
+    searchTerm: '',
+    matchingSongs: computed('model.songs.@each.title', 'searchTerm', function() {
+        var searchTerm = this.get('searchTerm').toLowerCase();
+        return this.get('model.songs').filter(function(song) {
+            return song.get('title').toLowerCase().indexOf(searchTerm) !== -1;
+        });
+    }),
+    sortedSongs: sort('matchingSongs', 'sortProperties'),
     actions: {
             updateRating: function(params) {
                 var song = params.item,
